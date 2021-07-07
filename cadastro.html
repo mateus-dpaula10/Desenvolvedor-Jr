@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="text/javascript" src="../Desenvolvedor Jr/js/jquery-3.6.0.min.js"></script>
+    <style type="text/css">    
+    #usuário {
+        display: block;
+        margin: 10px 0;
+    }
+    #senha {
+        display: block;
+        margin: 10px 0;
+    }
+    #confirmsenha {
+        display: block;
+        margin: 10px 0;
+    }
+    h1 {
+        font-size: 50px;
+        font-weight: 700;
+        color: blueviolet;
+        margin: 80px 0 30px 0;
+    }
+    #botão {
+        margin: 50px 0 0 0;
+        background: blueviolet;        
+    }
+    ::placeholder {
+        text-align: center;
+    }
+    #msgError {
+        text-align: center;
+        color: #ff0000;
+        background-color: #ffbbbb;
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+    }
+    #msgSuccess {
+        text-align: center;
+        color: #00bb00;
+        background-color: #bbffbe;
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+    }
+    
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-1"></div>
+
+            <div class="col-10" align="center">
+
+                <h1>CADASTRO</h1>
+
+                <div id="msgSuccess"></div>
+                <div id="msgError"></div>
+
+                <form action="#" method="POST" id="cadastro">
+                    <div>
+                        <label id="labelUsuário">Usuário:</label>
+                        <input type="text" id="usuário" placeholder="Digite seu usuário" required>
+                    </div>
+                    <div>
+                        <label id="labelSenha">Senha:</label>
+                        <input type="password" id="senha" placeholder="Digite sua senha" required>
+                    </div>
+                    <div>
+                        <label id="labelConfirmação">Confirmação de senha:</label>
+                        <input type="password" id="confirmsenha" placeholder="Confirme sua senha" required>
+                    </div>
+                    <div>
+                        <button id="botão" onclick='cadastrar()'>CADASTRAR</button>
+                    </div>
+        
+                </form>
+
+            </div>
+
+            <div class="col-1"></div>
+
+        </div>
+    </div>
+
+        
+
+    
+
+    <script type="text/javascript">
+
+    let usuário = document.querySelector('#usuário')
+    let labelUsuário = document.querySelector('#labelUsuário')
+    let validusuário = false
+
+    let senha = document.querySelector('#senha')
+    let labelSenha = document.querySelector('#labelSenha')
+    let validsenha = false
+    
+    let confirmsenha = document.querySelector('#confirmsenha')
+    let labelConfirmação = document.querySelector('#labelConfirmação')
+    let validconfirmsenha = false
+
+    let msgError = document.querySelector('#msgError')
+    let msgSuccess = document.querySelector('#msgSuccess')
+    
+
+    usuário.addEventListener('keyup', ()=> {
+        if(usuário.value.length <= 2){
+            labelUsuário.setAttribute('style', 'color: red')
+            labelUsuário.innerHTML = '<strong>Usuário *Insira no mínimo 3 caracteres</strong>'
+            usuário.setAttribute('style', 'border-color: red')
+            validusuário = false
+        } else {
+            labelUsuário.setAttribute('style', 'color: green')
+            labelUsuário.innerHTML = 'Usuário:'
+            usuário.setAttribute('style', 'border-color: green')
+            validusuário = true
+
+        }
+    })
+
+
+    senha.addEventListener('keyup', ()=> {
+        if(senha.value.length <= 5){
+            labelSenha.setAttribute('style', 'color: red')
+            labelSenha.innerHTML = '<strong>Senha *Insira no mínimo 6 caracteres</strong>'
+            senha.setAttribute('style', 'border-color: red')
+            validsenha = false
+        } else {
+            labelSenha.setAttribute('style', 'color: green')
+            labelSenha.innerHTML = 'Senha:'
+            senha.setAttribute('style', 'border-color: green')
+            validsenha = true
+
+        }
+    })
+
+
+    confirmsenha.addEventListener('keyup', ()=> {
+        if(senha.value != confirmsenha.value){
+            labelConfirmação.setAttribute('style', 'color: red')
+            labelConfirmação.innerHTML = 'Confirmar Senha *As senhas não conferem'
+            confirmsenha.setAttribute('style', 'border-color: red')
+            validconfirmsenha = false
+        } else {
+            labelConfirmação.setAttribute('style', 'color: green')
+            labelConfirmação.innerHTML = 'Confirmar Senha'
+            confirmsenha.setAttribute('style', 'border-color: green')
+            validconfirmsenha = true
+        }
+    })
+
+
+
+    function cadastrar(){
+        if(validusuário && validsenha && validconfirmsenha){
+            let listaUser = JSON.parse(localStorage.getItem('listaUser') || '[]')
+
+            listaUser.push(
+            {
+                usuárioCad: usuário.value,
+                senhaCad: senha.value,                    
+            }
+            )
+
+            localStorage.setItem('listaUser', JSON.stringify(listaUser))
+
+
+
+            msgSuccess.setAttribute('style', 'display: block')
+            msgSuccess.innerHTML = '<strong>Cadastrando usuário...</strong>'
+            msgError.setAttribute('style', 'display: none')
+            msgError.innerHTML = ''
+
+            window.location.href = "../Desenvolvedor Jr/login.html"
+
+        } else {
+            msgError.setAttribute('style', 'display: block')
+            msgError.innerHTML = '<strong>Preencha todos os campos corretamente antes de cadastrar...</strong>'
+            msgSuccess.setAttribute('style', 'display: none')
+            msgSuccess.innerHTML = ''
+        }
+    }
+    
+    </script>
+    
+</body>
+</html>

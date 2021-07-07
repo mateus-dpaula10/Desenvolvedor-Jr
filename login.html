@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="text/javascript" src="../Desenvolvedor Jr/js/jquery-3.6.0.min.js"></script>
+    <style type="text/css">    
+    #usuário {
+        display: block;
+        margin: 10px 0;
+    }
+    #senha {
+        display: block;
+        margin: 10px 0;
+    }
+    h1 {
+        font-size: 50px;
+        font-weight: 700;
+        color: blueviolet;
+        margin: 80px 0 30px 0;
+    }
+    #botão {
+        margin: 50px 0 0 0;
+        background: blueviolet;        
+    }
+    ::placeholder {
+        text-align: center;
+    }
+    #msgError {
+        text-align: center;
+        color: #ff0000;
+        background-color: #ffbbbb;
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+    }
+    #msgSuccess {
+        text-align: center;
+        color: #00bb00;
+        background-color: #bbffbe;
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-1"></div>
+
+            <div class="col-10" align="center">
+
+                <h1>LOGIN</h1>
+
+                <div id="msgSuccess"></div>
+                <div id="msgError"></div>
+
+                <form action="#" method="POST" id="cadastro">
+                    <div>
+                        <label id="labelUser">Usuário:</label>
+                        <input type="text" id="usuário" placeholder="Digite seu usuário" required>
+                    </div>
+                    <div>
+                        <label id="labelSenha">Senha:</label>
+                        <input type="password" id="senha" placeholder="Digite sua senha" required>
+                    </div>                    
+                    <div>
+                        <button id="botão" onclick='entrar()'>ACESSAR</button>
+                    </div>
+        
+                </form>
+
+            </div>
+
+            <div class="col-1"></div>
+
+        </div>
+    </div>
+
+        
+
+    
+
+    <script type="text/javascript">
+
+    function entrar(){
+        let usuário = document.querySelector('#usuário')
+        let labelUser = document.querySelector('#labelUser')
+
+        let senha = document.querySelector('#senha')
+        let labelSenha = document.querySelector('#labelSenha')
+
+        let msgError = document.querySelector('#msgError')
+        let msgSuccess = document.querySelector('#msgSuccess')
+        let listaUser = []
+
+        let userValid = {
+            user: '',
+            senha: ''
+        }
+
+        listaUser = JSON.parse(localStorage.getItem('listaUser'))
+
+        listaUser.forEach((item) => {
+            if(usuário.value == item.usuárioCad && senha.value == item.senhaCad){
+                
+                userValid = {
+                    user: item.usuárioCad,
+                    senha: item.senhaCad
+                }
+
+            }
+        })
+
+        if(usuário.value == userValid.user && senha.value == userValid.senha){
+            labelUser.setAttribute('style', 'color: green')
+            usuário.setAttribute('style', 'border-color: green')
+            labelSenha.setAttribute('style', 'color: green')
+            senha.setAttribute('style', 'border-color: green')
+            msgSuccess.setAttribute('style', 'display: block')
+            msgSuccess.innerHTML = 'Usuário Logado'
+
+        } else {
+            labelUser.setAttribute('style', 'color: red')
+            usuário.setAttribute('style', 'border-color: red')
+            labelSenha.setAttribute('style', 'color: red')
+            senha.setAttribute('style', 'border-color: red')
+            msgError.setAttribute('style', 'display: block')
+            msgError.innerHTML = 'Usuário ou senha incorretos'
+            usuário.focus()
+        }
+        
+    }
+
+    
+    </script>
+    
+</body>
+</html>
